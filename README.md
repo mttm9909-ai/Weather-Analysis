@@ -2,6 +2,8 @@
 
 A free, non-commercial weather consensus dashboard for Blenheim, Marlborough. It compares independent global forecast models, publishes the median forecast, and makes wind speed, gusts, direction, and model spread first-class information.
 
+Live site: [mttm9909-ai.github.io/Weather-Analysis](https://mttm9909-ai.github.io/Weather-Analysis/)
+
 ## What it does
 
 - Refreshes every three hours through GitHub Actions and deploys to GitHub Pages.
