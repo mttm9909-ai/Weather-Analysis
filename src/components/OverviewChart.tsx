@@ -20,7 +20,7 @@ interface OverviewChartProps {
 export function OverviewChart({ hourly }: OverviewChartProps) {
   const chartData = useMemo(() => hourly.slice(0, 72).map((point, index) => ({
     ...point,
-    tick: index % 6 === 0 ? formatHour(point.time) : '',
+    showTick: index % 6 === 0,
   })), [hourly])
 
   const dayBoundaries = chartData.filter((point) => point.time.endsWith('T00:00'))
@@ -46,15 +46,22 @@ export function OverviewChart({ hourly }: OverviewChartProps) {
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ top: 10, right: 10, bottom: 0, left: -18 }}>
             <CartesianGrid stroke="#e4eaf1" strokeDasharray="2 4" vertical={false} />
-            <XAxis dataKey="tick" axisLine={{ stroke: '#aeb9c7' }} tickLine={false} tick={{ fill: '#5e6b7f', fontSize: 11 }} interval={0} />
+            <XAxis
+              dataKey="time"
+              axisLine={{ stroke: '#aeb9c7' }}
+              tickLine={false}
+              tick={{ fill: '#5e6b7f', fontSize: 11 }}
+              tickFormatter={(time, index) => chartData[index]?.showTick ? formatHour(String(time)) : ''}
+              interval={0}
+            />
             <YAxis yAxisId="temp" domain={['dataMin - 2', 'dataMax + 2']} tickLine={false} axisLine={false} tick={{ fill: '#5e6b7f', fontSize: 11 }} unit="°" />
             <YAxis yAxisId="rain" orientation="right" domain={[0, 'auto']} tickLine={false} axisLine={false} tick={{ fill: '#5e6b7f', fontSize: 11 }} unit=" mm" width={45} />
             <Tooltip
               contentStyle={{ border: '1px solid #dbe3ed', borderRadius: 8, boxShadow: '0 8px 24px rgba(17, 40, 75, .1)' }}
-              labelFormatter={(_, payload) => payload[0]?.payload?.time ? `${formatDate(payload[0].payload.time)}, ${formatHour(payload[0].payload.time)}` : ''}
+              labelFormatter={(time) => `${formatDate(String(time))}, ${formatHour(String(time))}`}
               formatter={(value, name) => name === 'Temperature' ? [`${formatNumber(Number(value), 1)}°C`, name] : [`${formatNumber(Number(value), 1)} mm`, name]}
             />
-            {dayBoundaries.map((point) => <ReferenceLine key={point.time} x={point.tick} stroke="#c8d1dc" strokeDasharray="6 5" />)}
+            {dayBoundaries.map((point) => <ReferenceLine key={point.time} x={point.time} stroke="#c8d1dc" strokeDasharray="6 5" />)}
             <Bar yAxisId="rain" dataKey="rain" name="Rain" fill="#a8d1f4" stroke="#5da5e6" barSize={7} radius={[2, 2, 0, 0]} />
             <Line yAxisId="temp" type="monotone" dataKey="temperature" name="Temperature" stroke="#2165d6" strokeWidth={2.5} dot={false} activeDot={{ r: 4, fill: '#2165d6' }} />
           </ComposedChart>

@@ -38,7 +38,7 @@ export function WindForecast({ hourly }: WindForecastProps) {
   const next72 = hourly.slice(0, 72)
   const chartData = useMemo(() => hourly.slice(0, 72).map((point, index) => ({
     ...point,
-    tick: index % 6 === 0 ? formatHour(point.time) : '',
+    showTick: index % 6 === 0,
     gustBand: [point.spread.windGustMin, point.spread.windGustMax],
   })), [hourly])
   const peak = next72.reduce((highest, point) => point.windGust > highest.windGust ? point : highest, next72[0])
@@ -86,11 +86,18 @@ export function WindForecast({ hourly }: WindForecastProps) {
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={chartData} margin={{ top: 10, right: 8, bottom: 0, left: -16 }}>
                 <CartesianGrid stroke="#e4eaf1" strokeDasharray="2 4" vertical={false} />
-                <XAxis dataKey="tick" axisLine={{ stroke: '#aeb9c7' }} tickLine={false} tick={{ fill: '#5e6b7f', fontSize: 11 }} interval={0} />
+                <XAxis
+                  dataKey="time"
+                  axisLine={{ stroke: '#aeb9c7' }}
+                  tickLine={false}
+                  tick={{ fill: '#5e6b7f', fontSize: 11 }}
+                  tickFormatter={(time, index) => chartData[index]?.showTick ? formatHour(String(time)) : ''}
+                  interval={0}
+                />
                 <YAxis domain={[0, 'dataMax + 5']} tickLine={false} axisLine={false} tick={{ fill: '#5e6b7f', fontSize: 11 }} unit=" km/h" width={64} />
                 <Tooltip
                   contentStyle={{ border: '1px solid #dbe3ed', borderRadius: 8, boxShadow: '0 8px 24px rgba(17, 40, 75, .1)' }}
-                  labelFormatter={(_, payload) => payload[0]?.payload?.time ? `${formatDate(payload[0].payload.time)}, ${formatHour(payload[0].payload.time)}` : ''}
+                  labelFormatter={(time) => `${formatDate(String(time))}, ${formatHour(String(time))}`}
                   formatter={(value, name) => Array.isArray(value)
                     ? [`${formatNumber(Number(value[0]), 1)}–${formatNumber(Number(value[1]), 1)} km/h`, name]
                     : [`${formatNumber(Number(value), 1)} km/h`, name]}
