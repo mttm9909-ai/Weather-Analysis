@@ -13,7 +13,7 @@ Live site: [mttm9909-ai.github.io/Weather-Analysis](https://mttm9909-ai.github.i
 - Combines temperature, rain, humidity, cloud, pressure, and gusts with a robust median.
 - Combines sustained wind as east–west and north–south vectors before converting the result back into a compass bearing. This correctly handles north-crossing directions such as 350° and 10°.
 - Measures model direction disagreement using the shortest circular distance and includes it in wind confidence.
-- Shows 72-hour wind and gust forecasts, model spread, peak timing, wind direction, rain timing, and vineyard-oriented frost and spray-window guidance.
+- Shows 48-hour weather and wind outlooks, including gust forecasts, model spread, peak timing and wind direction, alongside rain timing and vineyard-oriented frost and spray-window guidance.
 - Lets each user set persistent sustained-wind and gust watch thresholds, draws them on the wind chart, and reports the next crossing plus affected hours.
 
 No API key, paid account, backend, or database is required.
