@@ -35,25 +35,25 @@ const readThresholds = () => {
 
 export function WindForecast({ hourly }: WindForecastProps) {
   const [thresholds, setThresholds] = useState(readThresholds)
-  const next72 = hourly.slice(0, 72)
-  const chartData = useMemo(() => hourly.slice(0, 72).map((point, index) => ({
+  const next48 = hourly.slice(0, 48)
+  const chartData = useMemo(() => hourly.slice(0, 48).map((point, index) => ({
     ...point,
     showTick: index % 6 === 0,
     gustBand: [point.spread.windGustMin, point.spread.windGustMax],
   })), [hourly])
-  const peak = next72.reduce((highest, point) => point.windGust > highest.windGust ? point : highest, next72[0])
-  const widestSpread = Math.max(...next72.map((point) => point.spread.windGustMax - point.spread.windGustMin))
-  const widestDirectionSpread = Math.max(...next72.map((point) => point.spread.windDirectionSpread))
-  const directionSamples = next72.filter((_, index) => index % 6 === 0).slice(0, 12)
+  const peak = next48.reduce((highest, point) => point.windGust > highest.windGust ? point : highest, next48[0])
+  const widestSpread = Math.max(...next48.map((point) => point.spread.windGustMax - point.spread.windGustMin))
+  const widestDirectionSpread = Math.max(...next48.map((point) => point.spread.windDirectionSpread))
+  const directionSamples = next48.filter((_, index) => index % 6 === 0)
   const agreement = widestSpread <= 8 && widestDirectionSpread <= 35
     ? 'High'
     : widestSpread <= 16 && widestDirectionSpread <= 70
       ? 'Moderate'
       : 'Low'
-  const thresholdPoints = next72.filter((point) => point.windSpeed >= thresholds.sustained || point.windGust >= thresholds.gust)
+  const thresholdPoints = next48.filter((point) => point.windSpeed >= thresholds.sustained || point.windGust >= thresholds.gust)
   const firstThreshold = thresholdPoints[0]
-  const sustainedHours = next72.filter((point) => point.windSpeed >= thresholds.sustained).length
-  const gustHours = next72.filter((point) => point.windGust >= thresholds.gust).length
+  const sustainedHours = next48.filter((point) => point.windSpeed >= thresholds.sustained).length
+  const gustHours = next48.filter((point) => point.windGust >= thresholds.gust).length
 
   useEffect(() => {
     window.localStorage.setItem('blenheim-wind-thresholds', JSON.stringify(thresholds))
@@ -73,7 +73,7 @@ export function WindForecast({ hourly }: WindForecastProps) {
     <section className="panel wind-panel" id="wind" aria-labelledby="wind-heading">
       <div className="panel-heading-row">
         <div>
-          <h2 id="wind-heading"><Wind size={20} />72-hour wind outlook</h2>
+          <h2 id="wind-heading"><Wind size={20} />48-hour wind outlook</h2>
           <p>Sustained wind, gusts, direction and model spread</p>
         </div>
         <div className={`wind-confidence ${agreement.toLowerCase()}`}>
@@ -110,7 +110,7 @@ export function WindForecast({ hourly }: WindForecastProps) {
               </ComposedChart>
             </ResponsiveContainer>
           </div>
-          <div className="wind-direction-rail" aria-label="Wind direction through the next 72 hours">
+          <div className="wind-direction-rail" aria-label="Wind direction through the next 48 hours">
             {directionSamples.map((point) => (
               <div key={point.time}>
                 <Navigation size={17} style={{ transform: `rotate(${point.windDirection - 45}deg)` }} />
