@@ -18,7 +18,7 @@ interface OverviewChartProps {
 }
 
 export function OverviewChart({ hourly }: OverviewChartProps) {
-  const chartData = useMemo(() => hourly.slice(0, 72).map((point, index) => ({
+  const chartData = useMemo(() => hourly.slice(0, 48).map((point, index) => ({
     ...point,
     showTick: index % 6 === 0,
   })), [hourly])
@@ -29,7 +29,7 @@ export function OverviewChart({ hourly }: OverviewChartProps) {
     <section className="panel overview-panel" aria-labelledby="overview-heading">
       <div className="panel-heading-row">
         <div>
-          <h2 id="overview-heading">72-hour weather overview</h2>
+          <h2 id="overview-heading">48-hour weather overview</h2>
           <p>Most-likely forecast from independent global models</p>
         </div>
         <div className="chart-legend" aria-label="Chart legend">
