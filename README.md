@@ -12,6 +12,7 @@ Live site: [mttm9909-ai.github.io/Weather-Analysis](https://mttm9909-ai.github.i
 - Shows Yr / MET Norway as a reference forecast but excludes it from the vote to avoid counting its ECMWF-derived guidance twice.
 - Combines temperature, rain, humidity, cloud, pressure, and gusts with a robust median.
 - Combines sustained wind as east–west and north–south vectors before converting the result back into a compass bearing. This correctly handles north-crossing directions such as 350° and 10°.
+- Uses the historically validated ECMWF, GFS and UKMO trio for sustained-wind speed and direction. ICON and GEM remain visible and still contribute to unvalidated fields such as temperature, rain and gusts.
 - Measures model direction disagreement using the shortest circular distance and includes it in wind confidence.
 - Shows 48-hour weather and wind outlooks, including gust forecasts, model spread, peak timing and wind direction, alongside rain timing and vineyard-oriented frost and spray-window guidance.
 - Lets each user set persistent sustained-wind and gust watch thresholds, draws them on the wind chart, and reports the next crossing plus affected hours.
@@ -50,7 +51,7 @@ Only operational, independently labelled models vote. For each local forecast ho
 4. The full model min/max range is retained for temperature, rain, wind speed, and gusts.
 5. Publishing stops if fewer than three independent models are available, leaving the previous successful Pages deployment intact.
 
-The accuracy panel begins in a labelled learning state. It does not pretend historical verification exists; adding an observation archive is a future enhancement.
+The wind accuracy panel uses Blenheim Aero hourly observations from 2024–2026 and like-for-like archived 24- and 48-hour forecasts. The uploaded gust and rain records do not overlap the free multi-model forecast archive, so those fields remain explicitly untested.
 
 ## Sources and responsible use
 
