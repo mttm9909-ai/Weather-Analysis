@@ -275,6 +275,7 @@ main { display: grid; gap: 10px; margin-top: 10px; }
 .wind-direction-rail span { margin-top: 1px; color: var(--muted); font-size: 0.55rem; }
 .wind-operational-row { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(230px, 0.75fr); gap: 10px; margin-top: 14px; align-items: stretch; }
 .embedded-vineyard { border: 1px solid var(--border); border-radius: 7px; background: #fbfdfc; }
+.embedded-vineyard .vineyard-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
 .wind-sidebar { padding: 6px 0 0 16px; border-left: 1px solid var(--border); }
 .wind-highlights { margin: 0; }
 .wind-highlights > div { padding: 8px 0; border-bottom: 1px solid var(--border); }
@@ -370,6 +371,10 @@ table { border-collapse: collapse; width: 100%; }
 .source-links a { display: inline-flex; align-items: center; gap: 4px; color: var(--blue); font-size: 0.62rem; text-decoration: none; }
 .source-links a:hover { text-decoration: underline; }
 .source-links p { margin: 9px 0 0; color: var(--muted); font-size: 0.55rem; }
+
+@media (max-width: 1180px) {
+  .embedded-vineyard .vineyard-list { display: block; }
+}
 
 @media (max-width: 1080px) {
   .app-header { grid-template-columns: 1fr auto; }
