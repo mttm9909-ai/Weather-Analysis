@@ -161,8 +161,6 @@ main { display: grid; gap: 10px; margin-top: 10px; }
   align-items: start;
 }
 
-.top-insight-stack { display: grid; min-width: 0; gap: 10px; }
-
 .overview-panel { min-width: 0; padding: 15px 16px 10px; }
 
 .panel-heading-row {
@@ -212,6 +210,7 @@ main { display: grid; gap: 10px; margin-top: 10px; }
 
 .section-title-line { display: flex; justify-content: space-between; align-items: center; }
 .source-count { color: var(--muted); font-size: 0.72rem; }
+.current-scope-note { margin: 3px 0 0; color: var(--muted); font-size: 0.65rem; line-height: 1.35; }
 
 .current-hero {
   display: flex;
@@ -274,12 +273,14 @@ main { display: grid; gap: 10px; margin-top: 10px; }
 .wind-direction-rail div { display: flex; flex-direction: column; align-items: center; color: #0c6e89; }
 .wind-direction-rail strong { margin-top: 1px; font-size: 0.62rem; }
 .wind-direction-rail span { margin-top: 1px; color: var(--muted); font-size: 0.55rem; }
+.wind-operational-row { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(230px, 0.75fr); gap: 10px; margin-top: 14px; align-items: stretch; }
+.embedded-vineyard { border: 1px solid var(--border); border-radius: 7px; background: #fbfdfc; }
 .wind-sidebar { padding: 6px 0 0 16px; border-left: 1px solid var(--border); }
 .wind-highlights { margin: 0; }
 .wind-highlights > div { padding: 8px 0; border-bottom: 1px solid var(--border); }
 .wind-highlights dt { display: flex; gap: 7px; align-items: center; color: var(--muted); font-size: 0.68rem; }
 .wind-highlights dd { margin: 3px 0 0; color: var(--navy); font-size: 0.88rem; font-weight: 690; }
-.wind-watch { margin-top: 12px; padding: 9px; border: 1px solid var(--border); border-radius: 7px; background: #f8fbfe; }
+.wind-watch { padding: 10px 12px; border: 1px solid var(--border); border-radius: 7px; background: #f8fbfe; }
 .wind-watch.active { border-color: #efcc91; background: var(--amber-soft); }
 .wind-watch-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .wind-watch-heading span { display: flex; align-items: center; gap: 6px; color: var(--navy); font-size: 0.7rem; font-weight: 700; }
@@ -409,6 +410,7 @@ table { border-collapse: collapse; width: 100%; }
   .wind-chart { height: 210px; }
   .wind-direction-rail { grid-template-columns: repeat(6, 1fr); margin-left: 42px; }
   .wind-direction-rail div:nth-child(n+7) { display: none; }
+  .wind-operational-row { grid-template-columns: 1fr; margin-top: 12px; }
   .wind-sidebar { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; padding: 0; border-left: 0; }
   .wind-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
   .wind-method-note { grid-column: 1 / -1; }
