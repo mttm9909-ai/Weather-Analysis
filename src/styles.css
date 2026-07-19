@@ -158,7 +158,10 @@ main { display: grid; gap: 10px; margin-top: 10px; }
   display: grid;
   grid-template-columns: minmax(0, 2.25fr) minmax(300px, 1fr);
   gap: 10px;
+  align-items: start;
 }
+
+.top-insight-stack { display: grid; min-width: 0; gap: 10px; }
 
 .overview-panel { min-width: 0; padding: 15px 16px 10px; }
 
@@ -248,7 +251,7 @@ main { display: grid; gap: 10px; margin-top: 10px; }
 .daily-panel { padding: 12px 9px 8px; overflow: hidden; }
 .daily-panel .panel-heading-row { padding: 0 4px; margin-bottom: 8px; }
 
-.daily-strip { display: grid; grid-template-columns: repeat(10, minmax(93px, 1fr)); overflow-x: auto; border: 1px solid var(--border); border-radius: 7px; }
+.daily-strip { display: grid; grid-template-columns: repeat(5, minmax(120px, 1fr)); overflow-x: auto; border: 1px solid var(--border); border-radius: 7px; }
 .daily-day { min-width: 94px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 6px; border-right: 1px solid var(--border); }
 .daily-day:last-child { border-right: 0; }
 .daily-day strong { color: var(--navy); font-size: 0.76rem; }
@@ -400,7 +403,7 @@ table { border-collapse: collapse; width: 100%; }
   .current-panel { display: block; }
   .current-hero { border-right: 0; border-bottom: 1px solid var(--border); }
   .daily-panel { padding-left: 8px; padding-right: 8px; }
-  .daily-strip { grid-template-columns: repeat(10, 100px); }
+  .daily-strip { grid-template-columns: repeat(5, 100px); }
   .wind-panel { padding: 13px 10px; }
   .wind-layout { grid-template-columns: 1fr; gap: 10px; }
   .wind-chart { height: 210px; }
