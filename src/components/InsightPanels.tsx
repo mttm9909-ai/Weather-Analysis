@@ -19,9 +19,9 @@ export function RainPanel({ rain }: { rain: RainAnalysis }) {
 
 const conditionIcons = { frost: ShieldCheck, spray: Target, wind: Wind, humidity: Droplets }
 
-export function VineyardPanel({ conditions }: { conditions: VineyardCondition[] }) {
+export function VineyardPanel({ conditions, embedded = false }: { conditions: VineyardCondition[]; embedded?: boolean }) {
   return (
-    <section className="panel insight-panel vineyard-panel" id="vineyard" aria-labelledby="vineyard-heading">
+    <section className={`${embedded ? 'embedded-vineyard' : 'panel'} insight-panel vineyard-panel`} id="vineyard" aria-labelledby="vineyard-heading">
       <div className="insight-heading"><Leaf size={18} /><h2 id="vineyard-heading">Vineyard conditions</h2></div>
       <div className="vineyard-list">
         {conditions.map((condition) => {
