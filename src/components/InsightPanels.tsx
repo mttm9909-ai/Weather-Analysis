@@ -44,11 +44,11 @@ export function AccuracyPanel({ accuracy }: { accuracy: AccuracyMetric[] }) {
   const hasVerifiedData = accuracy.some((metric) => metric.verifiedDays > 0)
   return (
     <section className="panel insight-panel accuracy-panel" id="accuracy" aria-labelledby="accuracy-heading">
-      <div className="insight-heading"><Target size={18} /><h2 id="accuracy-heading">Recent model accuracy</h2></div>
+      <div className="insight-heading"><Target size={18} /><h2 id="accuracy-heading">Historical wind accuracy</h2></div>
       {!hasVerifiedData && (
         <div className="learning-state">
-          <strong>Local learning period</strong>
-          <p>Accuracy weights remain equal until enough Blenheim observations have been verified.</p>
+          <strong>No verified observations loaded</strong>
+          <p>This preview does not include the historical Blenheim Aero wind backtest.</p>
         </div>
       )}
       <div className="accuracy-table-wrap">
@@ -57,13 +57,14 @@ export function AccuracyPanel({ accuracy }: { accuracy: AccuracyMetric[] }) {
           <tbody>{accuracy.map((metric) => (
             <tr key={metric.modelId}>
               <td>{metric.modelName}</td><td>{metric.verifiedDays || '—'}</td>
-              <td>{metric.temperatureMae == null ? 'Learning' : `${formatNumber(metric.temperatureMae, 1)}°C`}</td>
-              <td>{metric.rainMae == null ? 'Learning' : `${formatNumber(metric.rainMae, 1)} mm`}</td>
-              <td>{metric.windMae == null ? 'Learning' : `${formatNumber(metric.windMae, 1)} km/h`}</td>
+              <td>{metric.temperatureMae == null ? 'Not tested' : `${formatNumber(metric.temperatureMae, 1)}°C`}</td>
+              <td>{metric.rainMae == null ? 'Not tested' : `${formatNumber(metric.rainMae, 1)} mm`}</td>
+              <td>{metric.windMae == null ? 'Not tested' : `${formatNumber(metric.windMae, 1)} km/h`}</td>
             </tr>
           ))}</tbody>
         </table>
       </div>
+      {hasVerifiedData && <p className="operational-note">Blenheim Aero hourly observations, 2024–2026. Wind MAE averages like-for-like 24- and 48-hour forecasts; gusts, rain and temperature remain untested.</p>}
     </section>
   )
 }
