@@ -12,12 +12,12 @@ export function DailyForecastStrip({ daily }: DailyForecastStripProps) {
     <section className="panel daily-panel" aria-labelledby="daily-heading">
       <div className="panel-heading-row compact">
         <div>
-          <h2 id="daily-heading">10-day forecast</h2>
+          <h2 id="daily-heading">5-day forecast</h2>
           <p>Daily values derived from the hourly consensus</p>
         </div>
       </div>
       <div className="daily-strip">
-        {daily.slice(0, 10).map((day) => (
+        {daily.slice(0, 5).map((day) => (
           <article className="daily-day" key={day.date}>
             <strong>{formatDate(day.date, { weekday: 'short' })}</strong>
             <span>{formatDate(day.date, { day: 'numeric', month: 'short' })}</span>
