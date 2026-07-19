@@ -1,5 +1,5 @@
 import { CheckCircle2, Gauge, Navigation, Waves, Wind } from 'lucide-react'
-import { confidenceLabel, formatNumber, weatherDescription, windCompass } from '../lib/weather'
+import { confidenceLabel, formatDateTime, formatNumber, weatherDescription, windCompass } from '../lib/weather'
 import type { ConfidenceSummary, DailyForecast, HourlyForecast } from '../types/weather'
 import { WeatherGlyph } from './WeatherGlyph'
 
@@ -13,7 +13,10 @@ export function CurrentConditions({ current, today, confidence }: CurrentConditi
   return (
     <section className="panel current-panel" aria-labelledby="current-heading">
       <div className="section-title-line">
-        <h2 id="current-heading">Current forecast</h2>
+        <div>
+          <h2 id="current-heading">Forecast for {formatDateTime(current.time)}</h2>
+          <p className="current-scope-note">Nearest hourly model consensus—not a live station observation.</p>
+        </div>
         <span className="source-count">{current.sourceCount} models</span>
       </div>
       <div className="current-hero">
