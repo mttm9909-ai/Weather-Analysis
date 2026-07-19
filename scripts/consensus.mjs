@@ -236,8 +236,8 @@ export const buildVineyardConditions = (hourly) => {
   const wind = gustPeak > 40
     ? { value: 'Strong', level: 'poor', detail: `Peak gusts near ${round(gustPeak)} km/h; sustained wind peaks near ${round(speedPeak)} km/h.` }
     : gustPeak > 25
-      ? { value: 'Moderate', level: 'moderate', detail: `Gusts may reach ${round(gustPeak)} km/h; check the 72-hour wind panel before spraying.` }
-      : { value: 'Manageable', level: 'good', detail: `Peak gusts stay near ${round(gustPeak)} km/h across the next 72 hours.` }
+      ? { value: 'Moderate', level: 'moderate', detail: `Gusts may reach ${round(gustPeak)} km/h; check the 48-hour wind panel before spraying.` }
+      : { value: 'Manageable', level: 'good', detail: `Peak gusts stay near ${round(gustPeak)} km/h across the next 48 hours.` }
 
   const humidityAverage = median(hourly.slice(0, 24).map((point) => point.humidity)) ?? 0
   const humidity = humidityAverage > 90
