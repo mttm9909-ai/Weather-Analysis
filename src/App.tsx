@@ -29,17 +29,19 @@ export default function App() {
         </div>
       )}
       <main id="forecast">
+        <WindForecast hourly={data.hourly} />
         <div className="primary-grid">
           <OverviewChart hourly={data.hourly} />
-          <CurrentConditions current={data.current} today={data.daily[0]} confidence={data.confidence} />
+          <aside className="top-insight-stack">
+            <CurrentConditions current={data.current} today={data.daily[0]} confidence={data.confidence} />
+            <VineyardPanel conditions={data.vineyardConditions} />
+          </aside>
         </div>
         <DailyForecastStrip daily={data.daily} />
-        <WindForecast hourly={data.hourly} />
         <div className="analysis-grid">
           <ModelComparison summaries={data.modelSummaries} />
           <aside className="insight-stack">
             <RainPanel rain={data.rainAnalysis} />
-            <VineyardPanel conditions={data.vineyardConditions} />
             <AccuracyPanel accuracy={data.accuracy} />
           </aside>
         </div>
