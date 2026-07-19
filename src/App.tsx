@@ -2,7 +2,7 @@ import { AlertTriangle, CloudOff } from 'lucide-react'
 import { AppHeader } from './components/AppHeader'
 import { CurrentConditions } from './components/CurrentConditions'
 import { DailyForecastStrip } from './components/DailyForecastStrip'
-import { AccuracyPanel, RainPanel, SourceFooter, VineyardPanel } from './components/InsightPanels'
+import { AccuracyPanel, RainPanel, SourceFooter } from './components/InsightPanels'
 import { ModelComparison } from './components/ModelComparison'
 import { OverviewChart } from './components/OverviewChart'
 import { WindForecast } from './components/WindForecast'
@@ -29,13 +29,10 @@ export default function App() {
         </div>
       )}
       <main id="forecast">
-        <WindForecast hourly={data.hourly} />
+        <WindForecast hourly={data.hourly} vineyardConditions={data.vineyardConditions} />
         <div className="primary-grid">
           <OverviewChart hourly={data.hourly} />
-          <aside className="top-insight-stack">
-            <CurrentConditions current={data.current} today={data.daily[0]} confidence={data.confidence} />
-            <VineyardPanel conditions={data.vineyardConditions} />
-          </aside>
+          <CurrentConditions current={data.current} today={data.daily[0]} confidence={data.confidence} />
         </div>
         <DailyForecastStrip daily={data.daily} />
         <div className="analysis-grid">
