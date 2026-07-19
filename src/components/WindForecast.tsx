@@ -12,10 +12,12 @@ import {
 } from 'recharts'
 import { AlertTriangle, Compass, Gauge, Navigation, RotateCcw, SlidersHorizontal, Wind } from 'lucide-react'
 import { formatDate, formatDateTime, formatHour, formatNumber, windCompass } from '../lib/weather'
-import type { HourlyForecast } from '../types/weather'
+import type { HourlyForecast, VineyardCondition } from '../types/weather'
+import { VineyardPanel } from './InsightPanels'
 
 interface WindForecastProps {
   hourly: HourlyForecast[]
+  vineyardConditions: VineyardCondition[]
 }
 
 const DEFAULT_THRESHOLDS = { sustained: 20, gust: 35 }
@@ -33,7 +35,7 @@ const readThresholds = () => {
   }
 }
 
-export function WindForecast({ hourly }: WindForecastProps) {
+export function WindForecast({ hourly, vineyardConditions }: WindForecastProps) {
   const [thresholds, setThresholds] = useState(readThresholds)
   const next48 = hourly.slice(0, 48)
   const chartData = useMemo(() => hourly.slice(0, 48).map((point, index) => ({
@@ -119,6 +121,30 @@ export function WindForecast({ hourly }: WindForecastProps) {
               </div>
             ))}
           </div>
+          <div className="wind-operational-row">
+            <VineyardPanel conditions={vineyardConditions} embedded />
+            <div className={`wind-watch ${firstThreshold ? 'active' : 'clear'}`}>
+              <div className="wind-watch-heading">
+                <span><SlidersHorizontal size={15} />My wind watch</span>
+                <button type="button" onClick={() => setThresholds(DEFAULT_THRESHOLDS)} aria-label="Reset wind thresholds"><RotateCcw size={13} /></button>
+              </div>
+              <label>
+                <span>Sustained <strong>{thresholds.sustained} km/h</strong></span>
+                <input type="range" min="10" max="60" step="5" value={thresholds.sustained} onChange={(event) => updateSustained(Number(event.target.value))} />
+              </label>
+              <label>
+                <span>Gusts <strong>{thresholds.gust} km/h</strong></span>
+                <input type="range" min="15" max="90" step="5" value={thresholds.gust} onChange={(event) => updateGust(Number(event.target.value))} />
+              </label>
+              <div className="wind-watch-result">
+                {firstThreshold ? <AlertTriangle size={15} /> : <Wind size={15} />}
+                <div>
+                  <strong>{firstThreshold ? `Next crossing ${formatDateTime(firstThreshold.time)}` : 'No threshold crossings'}</strong>
+                  <span>{sustainedHours} sustained-wind hours · {gustHours} gust hours</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <aside className="wind-sidebar">
           <dl className="wind-highlights">
@@ -128,27 +154,6 @@ export function WindForecast({ hourly }: WindForecastProps) {
             <div><dt>Largest model spread</dt><dd>{formatNumber(widestSpread)} km/h</dd></div>
             <div><dt>Largest direction split</dt><dd>±{formatNumber(widestDirectionSpread)}°</dd></div>
           </dl>
-          <div className={`wind-watch ${firstThreshold ? 'active' : 'clear'}`}>
-            <div className="wind-watch-heading">
-              <span><SlidersHorizontal size={15} />My wind watch</span>
-              <button type="button" onClick={() => setThresholds(DEFAULT_THRESHOLDS)} aria-label="Reset wind thresholds"><RotateCcw size={13} /></button>
-            </div>
-            <label>
-              <span>Sustained <strong>{thresholds.sustained} km/h</strong></span>
-              <input type="range" min="10" max="60" step="5" value={thresholds.sustained} onChange={(event) => updateSustained(Number(event.target.value))} />
-            </label>
-            <label>
-              <span>Gusts <strong>{thresholds.gust} km/h</strong></span>
-              <input type="range" min="15" max="90" step="5" value={thresholds.gust} onChange={(event) => updateGust(Number(event.target.value))} />
-            </label>
-            <div className="wind-watch-result">
-              {firstThreshold ? <AlertTriangle size={15} /> : <Wind size={15} />}
-              <div>
-                <strong>{firstThreshold ? `Next crossing ${formatDateTime(firstThreshold.time)}` : 'No threshold crossings'}</strong>
-                <span>{sustainedHours} sustained-wind hours · {gustHours} gust hours</span>
-              </div>
-            </div>
-          </div>
           <p className="wind-method-note">Direction is combined as east–west and north–south vectors before being converted back to a compass bearing.</p>
         </aside>
       </div>
