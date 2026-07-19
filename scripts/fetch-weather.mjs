@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
-  buildAccuracyPlaceholders,
+  buildAccuracyMetrics,
   buildConfidence,
   buildConsensus,
   buildDailyForecast,
@@ -261,7 +261,7 @@ const run = async () => {
     confidence: buildConfidence(hourly, models, MODEL_DEFINITIONS.length),
     rainAnalysis: buildRainAnalysis(hourly),
     vineyardConditions: buildVineyardConditions(hourly),
-    accuracy: buildAccuracyPlaceholders(models),
+    accuracy: buildAccuracyMetrics(models),
     links,
   }
 
