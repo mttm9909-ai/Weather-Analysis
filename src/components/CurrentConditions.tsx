@@ -14,8 +14,8 @@ export function CurrentConditions({ current, today, confidence }: CurrentConditi
     <section className="panel current-panel" aria-labelledby="current-heading">
       <div className="section-title-line">
         <div>
-          <h2 id="current-heading">Forecast for {formatDateTime(current.time)}</h2>
-          <p className="current-scope-note">Nearest hourly model consensus—not a live station observation.</p>
+          <h2 id="current-heading">Next-hour forecast — {formatDateTime(current.time)}</h2>
+          <p className="current-scope-note">Next available hourly model consensus—not a live station observation.</p>
         </div>
         <span className="source-count">{current.sourceCount} models</span>
       </div>
