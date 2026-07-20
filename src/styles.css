@@ -268,7 +268,9 @@ main { display: grid; gap: 10px; margin-top: 10px; }
 .wind-confidence.moderate { border-color: var(--amber); color: #a0660e; }
 .wind-confidence.low { border-color: var(--red); color: var(--red); }
 .wind-layout { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 18px; }
-.wind-chart { height: 205px; }
+.wind-chart { position: relative; height: 220px; }
+.wind-chart-dates { position: absolute; z-index: 2; top: 4px; right: 10px; left: 49px; display: flex; pointer-events: none; }
+.wind-chart-dates span { color: #42536b; font-size: 0.68rem; font-weight: 680; text-align: center; }
 .wind-direction-rail { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; margin: 1px 7px 0 47px; }
 .wind-direction-rail div { display: flex; flex-direction: column; align-items: center; color: #0c6e89; }
 .wind-direction-rail strong { margin-top: 1px; font-size: 0.62rem; }
