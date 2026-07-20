@@ -43,6 +43,13 @@ export function WindForecast({ hourly, vineyardConditions }: WindForecastProps) 
     showTick: index % 6 === 0,
     gustBand: [point.spread.windGustMin, point.spread.windGustMax],
   })), [hourly])
+  const chartDays = useMemo(() => chartData.reduce<Array<{ date: string; hours: number }>>((days, point) => {
+    const date = point.time.slice(0, 10)
+    const previous = days[days.length - 1]
+    if (previous?.date === date) previous.hours += 1
+    else days.push({ date, hours: 1 })
+    return days
+  }, []), [chartData])
   const peak = next48.reduce((highest, point) => point.windGust > highest.windGust ? point : highest, next48[0])
   const widestSpread = Math.max(...next48.map((point) => point.spread.windGustMax - point.spread.windGustMin))
   const widestDirectionSpread = Math.max(...next48.map((point) => point.spread.windDirectionSpread))
@@ -85,8 +92,13 @@ export function WindForecast({ hourly, vineyardConditions }: WindForecastProps) 
       <div className="wind-layout">
         <div>
           <div className="wind-chart">
+            <div className="wind-chart-dates" aria-label={`Forecast dates: ${chartDays.map((day) => formatDate(day.date)).join(', ')}`}>
+              {chartDays.map((day) => (
+                <span key={day.date} style={{ flex: day.hours }}>{formatDate(day.date, { weekday: 'short', day: 'numeric', month: 'short' })}</span>
+              ))}
+            </div>
             <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={chartData} margin={{ top: 10, right: 8, bottom: 0, left: -16 }}>
+              <ComposedChart data={chartData} margin={{ top: 30, right: 8, bottom: 0, left: -16 }}>
                 <CartesianGrid stroke="#e4eaf1" strokeDasharray="2 4" vertical={false} />
                 <XAxis
                   dataKey="time"
